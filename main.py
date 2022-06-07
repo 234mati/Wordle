@@ -1,14 +1,16 @@
 from typing import Optional
 from fastapi import FastAPI
-
-app = FastAPI()
-
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
+import ReadingFile
+import Node
 
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Optional[str] = None):
-    return {"item_id": item_id, "q": q}
+minWordLength = 4
+maxWordLength = 7
+treeDeep = 3
 
+read = ReadingFile.ReadingFile(minWordLength, maxWordLength, treeDeep)
+readCheck = read.getCheckingTrees()
+readGuess = read.getGuessWords()
+
+print(readCheck[0].search_for_word("xxxx"))
+print(readGuess)
