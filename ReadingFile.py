@@ -20,7 +20,7 @@ class ReadingFile():
         f = open(os.path.join(scriptDir, textOpenForCheckingPath), encoding="utf8")
         textOpenForChecking = f.read()
         f.close()
-
+        #with open(..) as f:
         f2 = open(os.path.join(scriptDir, textOpenGuessWordsPath), encoding="utf8")
         textOpenGuessWords = f2.read()
         f2.close()
