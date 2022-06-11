@@ -1,0 +1,12 @@
+[Scores]
+totalwinscore = 30
+totallosescore = 2
+4letterwordswin = 25
+4letterwordslose = 0
+5letterwordswin = 5
+5letterwordslose = 2
+6letterwordswin = 0
+6letterwordslose = 0
+7letterwordswin = 0
+7letterwordslose = 0
+
