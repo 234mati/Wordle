@@ -1,12 +1,12 @@
 [Scores]
-totalwinscore = 30
-totallosescore = 2
-4letterwordswin = 25
-4letterwordslose = 0
-5letterwordswin = 5
-5letterwordslose = 2
-6letterwordswin = 0
-6letterwordslose = 0
-7letterwordswin = 0
-7letterwordslose = 0
+total win score = 63
+total lose score = 6
+4 letter words win = 26
+4 letter words lose = 0
+5 letter words win = 33
+5 letter words lose = 5
+6 letter words win = 2
+6 letter words lose = 0
+7 letter words win = 2
+7 letter words lose = 1
 

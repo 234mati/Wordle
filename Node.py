@@ -26,7 +26,7 @@ class Node():
         if self.isLeaf:
             #zmienić contains na fullWord in words
             return fullWord in self.words
-        elif cutWord[0] in self.children.keys():
+        elif cutWord!="" and cutWord[0] in self.children.keys():
             return self.children[cutWord[0]].search_for_word_help(fullWord,cutWord[1:])
         else:
             return False

@@ -23,6 +23,7 @@ class ReadingFile():
         self.minWordLength = int(self.configFile['base']['minWordLength'])
         self.maxWordLength = int(self.configFile['base']['maxWordLength'])
         self.treeDeep = int(self.configFile['base']['treeDeep'])
+        self.numberOfRounds = int(self.configFile['base']['numberOfRounds'])
  
 
         with open(os.path.join(scriptDir, textOpenForCheckingPath), encoding="utf8") as f:
@@ -80,21 +81,21 @@ class ReadingFile():
         if not os.path.exists(os.path.join(self.scriptDir, fileName)): 
             with open(os.path.join(self.scriptDir, fileName), 'x') as f:
                 f.write('[Scores]\n')
-                f.write('TotalWinScore = 0\n')
-                f.write('TotalLoseScore = 0\n')
+                f.write('Total Win Score = 0\n')
+                f.write('Total Lose Score = 0\n')
                 for i in range(self.minWordLength,self.maxWordLength+1):
-                    f.write(str(i)+'LetterWordsWin = 0\n')
-                    f.write(str(i)+'LetterWordsLose = 0\n')
+                    f.write(str(i)+' Letter Words Win = 0\n')
+                    f.write(str(i)+' Letter Words Lose = 0\n')
 
         scores = ConfigParser()
         scores.read(os.path.join(self.scriptDir, fileName))
 
         if isWin:
-            scores['Scores']['TotalWinScore']  = str(int(scores['Scores']['TotalWinScore'])  + 1)
-            scores['Scores'][str(numberOfLettersInWord)+'LetterWordsWin']  = str( int(scores['Scores'][str(numberOfLettersInWord)+'LetterWordsWin'])  + 1)
+            scores['Scores']['Total Win Score']  = str(int(scores['Scores']['Total Win Score'])  + 1)
+            scores['Scores'][str(numberOfLettersInWord)+' Letter Words Win']  = str( int(scores['Scores'][str(numberOfLettersInWord)+' Letter Words Win'])  + 1)
         else:
-            scores['Scores']['TotalLoseScore']  = str(int(scores['Scores']['TotalLoseScore'])  + 1)
-            scores['Scores'][str(numberOfLettersInWord)+'LetterWordsLose'] = str( int(scores['Scores'][str(numberOfLettersInWord)+'LetterWordsLose']) + 1)   
+            scores['Scores']['Total Lose Score']  = str(int(scores['Scores']['Total Lose Score'])  + 1)
+            scores['Scores'][str(numberOfLettersInWord)+' Letter Words Lose'] = str( int(scores['Scores'][str(numberOfLettersInWord)+' Letter Words Lose']) + 1)   
         
         with open(os.path.join(self.scriptDir, fileName),'w+') as scoreFile:
             scores.write(scoreFile)
@@ -108,9 +109,9 @@ class ReadingFile():
         savedGames.read(os.path.join(self.scriptDir, fileName))
         savedGames.add_section("Game - "+ str(len(savedGames.sections())+1))
         for i in range(len(listOfGuesses)):
-            savedGames.set("Game - "+ str(len(savedGames.sections())),"Round "+str(i), str(listOfGuesses[i]))  
-        savedGames.set("Game - "+ str(len(savedGames.sections())),"Number of needed words", str(len(listOfGuesses)))     
-        savedGames.set("Game - "+ str(len(savedGames.sections())),"Date ", datetime.datetime.now().strftime("%y-%m-%d %H:%M:%S") )
+            savedGames.set("Game - "+ str(len(savedGames.sections())),"round "+str(i), str(listOfGuesses[i]))  
+        savedGames.set("Game - "+ str(len(savedGames.sections())),"number of needed words", str(len(listOfGuesses)))     
+        savedGames.set("Game - "+ str(len(savedGames.sections())),"date ", datetime.datetime.now().strftime("%y-%m-%d %H:%M:%S") )
         with open(os.path.join(self.scriptDir, fileName),'w+') as gamesFile:
             savedGames.write(gamesFile)
 
@@ -121,6 +122,45 @@ class ReadingFile():
         config.read(os.path.join(self.scriptDir, fileName))
         return config
             
+
+    def changeStringForList(self, w: str):
+        sp = w.split("'")
+        temp = []
+        iter = 0
+  
+        for i in range(len(sp)):
+            if i % 2 != 0 and iter % 4 == 1:
+                temp.append(["",""])
+                temp[int(i//4)][0] = sp[i]
+            elif i % 2 != 0 and iter % 4 == 3:
+                temp[int(i//4)][1] = sp[i]
+            iter += 1
+        return temp
+
+    
+    def read_statistics(self):
+        fileName = self.scoresPath
+        statistics = ConfigParser()
+        statistics.read(os.path.join(self.scriptDir, fileName))
+        outputTabel = []
+        for i in statistics["Scores"].keys():
+            outputTabel.append((i,statistics["Scores"][i]))   
+        return outputTabel
+
+
+    def read_result(self):
+        fileName = self.savedGamesPath
+        savedGames = ConfigParser()
+        savedGames.read(os.path.join(self.scriptDir, fileName))
+        outputTabel = []
+        for game in savedGames.values():
+            if game.name != "DEFAULT":
+                numberOfNeededWords = int(game["number of needed words"])
+                roundScenario = [self.changeStringForList(game["round " + str(i)]) for i in range(numberOfNeededWords)]
+                outputTabel.append((roundScenario, numberOfNeededWords , game["date"]))
+        return outputTabel 
+
+
 
     def getConfigFile(self):
         return self.configFile

@@ -1,1 +1,13 @@
+[Game - 1]
+round 0 = [['r', 'inplace'], ['a', 'inplace'], ['z', 'out'], ['e', 'out'], ['m', 'out']]
+round 1 = [['r', 'inplace'], ['a', 'inplace'], ['d', 'inplace'], ['n', 'inplace'], ['y', 'inplace']]
+number of needed words = 2
+date = 22-06-12 19:19:05
+
+[Game - 2]
+round 0 = [['p', 'out'], ['a', 'known'], ['z', 'known'], ['u', 'out'], ['r', 'inplace'], ['y', 'out']]
+round 1 = [['z', 'known'], ['e', 'inplace'], ['m', 'out'], ['s', 'out'], ['t', 'out'], ['a', 'known']]
+round 2 = [['l', 'inplace'], ['e', 'inplace'], ['k', 'inplace'], ['a', 'inplace'], ['r', 'inplace'], ['z', 'inplace']]
+number of needed words = 3
+date = 22-06-12 20:30:16
 
